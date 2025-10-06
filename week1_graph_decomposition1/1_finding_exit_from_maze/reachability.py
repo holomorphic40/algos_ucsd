@@ -1,10 +1,23 @@
 #Uses python3
 
 import sys
+from collections import deque
 
 def reach(adj, x, y):
-    #write your code here
-    return 0
+    q = deque([x])
+    visited = dict()
+
+    while q: 
+        curr = q.popleft()
+        for vert in adj[curr]:
+            if not visited.get(vert):
+                visited[vert] = True
+                q.append(vert)
+    
+    if visited.get(y):
+        return 1
+    else:
+        return 0
 
 if __name__ == '__main__':
     input = sys.stdin.read()
@@ -16,18 +29,6 @@ if __name__ == '__main__':
     adj = [[] for _ in range(n)]
     x, y = x - 1, y - 1
     for (a, b) in edges:
-        print(a, b)
         adj[a - 1].append(b - 1)
         adj[b - 1].append(a - 1)
-    print( adj)
-    print(x, y)
     print(reach(adj, x, y))
-
-"""
-4 4
-1 2
-3 2
-4 3
-1 4
-1 4
-"""
